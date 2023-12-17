@@ -1,0 +1,19 @@
+import AuthForm from "../Components/Auth/AuthForm";
+
+const LoginPage = () => {
+  const handleSignIn = () => {};
+  return (
+    <div>
+      <AuthForm
+        title="Sign in to continue with stack"
+        buttonText="Sign In"
+        onSubmit={(data) => handleSignIn(data)}
+        linkText="Don't have an account?"
+        link={"/signup"}
+        linkTo="Sign Up"
+      />
+    </div>
+  );
+};
+
+export default LoginPage;
