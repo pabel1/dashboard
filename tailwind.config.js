@@ -13,15 +13,13 @@ export default {
     },
     container: {
       center: true,
-      padding: "20px",
+      padding: "25px",
       screens: {
         xs: "360px",
         sm: "600px",
         md: "768px",
         lg: "1024px",
         xl: "1280px",
-        "2xl": "1370px",
-        "3xl": "1540px",
       },
     },
     extend: {

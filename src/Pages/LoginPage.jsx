@@ -11,6 +11,7 @@ const LoginPage = () => {
         linkText="Don't have an account?"
         link={"/signup"}
         linkTo="Sign Up"
+        formType={"login"}
       />
     </div>
   );

@@ -1,17 +1,67 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/030---Paper-Stack.png";
+import {
+  useLoginUserMutation,
+  useSignUpUserMutation,
+} from "../../feature/auth/authApiSlice";
 import Button from "./Button";
 import Input from "./Input";
 
-const AuthForm = ({ title, buttonText, onSubmit, linkText, link, linkTo }) => {
+const AuthForm = ({
+  title,
+  buttonText,
+  onSubmit,
+  linkText,
+  link,
+  linkTo,
+  formType,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [isLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const [loginUser] = useLoginUserMutation() || {};
+  const [signUpUser] = useSignUpUserMutation() || {};
+
+  const handleForm = async (data) => {
+    try {
+      if (formType === "login") {
+        const result = await loginUser({
+          bodyData: data,
+        });
+        const { token } = result?.data || {};
+        if (token) {
+          navigate("/users");
+          toast.success("login Success!");
+        } else {
+          toast.error(result?.error?.data?.error || "login failed!");
+        }
+      }
+      if (formType === "signup") {
+        const result = await signUpUser({
+          bodyData: data,
+        });
+
+        const { token } = result?.data || {};
+        if (token) {
+          navigate("/users");
+          toast.success("SignUp Success!");
+        } else {
+          toast.error(result?.error?.data?.error || "SignUp failed!");
+        }
+      }
+
+      // Handle successful login (you can dispatch an action if needed)
+    } catch (error) {
+      // Handle login error
+      console.error("Login failed", error);
+    }
+  };
 
   return (
     <div className="flex justify-center h-[100vh] items-center">
@@ -25,7 +75,7 @@ const AuthForm = ({ title, buttonText, onSubmit, linkText, link, linkTo }) => {
         </div>
         <form
           className="form mt-10 grid grid-cols-1 gap-5"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleForm)}
         >
           <div className="">
             <label htmlFor="email" className="text text-base my-4 font-medium">

@@ -10,6 +10,7 @@ const SignUpPage = () => {
       linkText="Already have an account?"
       link="/login"
       linkTo="Sign In"
+      formType={"signup"}
     />
   );
 };

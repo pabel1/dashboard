@@ -8,17 +8,16 @@ import Reporting from "../Pages/Reporting/Reporting";
 import SignUpPage from "../Pages/SignUpPage";
 import Tasks from "../Pages/Tasks/Tasks";
 import Users from "../Pages/Users/Users";
+import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
     element: (
-      //   <PrivateRoute
-      //     allowedRoles={["Admin", "HR", "Super Admin", "Line Manager", "User"]}
-      //     path={"/login"}>
-      <Main />
-      //   </PrivateRoute>
+      <PrivateRoute allowedRoles={["User"]} path={"/login"}>
+        <Main />
+      </PrivateRoute>
     ),
     children: [
       {
