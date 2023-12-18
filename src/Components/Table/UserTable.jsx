@@ -162,7 +162,7 @@ const UserTable = ({ data, page, setPage }) => {
                       setPage(page - 1);
                     }
                   }}
-                  className={`font-normal border border-gray-200 px-3 py-1 rounded-lg ${
+                  className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
                     page === 1 && "opacity-50 cursor-not-allowed"
                   }`}
                 >
@@ -177,7 +177,7 @@ const UserTable = ({ data, page, setPage }) => {
                       setPage(page + 1);
                     }
                   }}
-                  className={`font-normal border border-gray-200 px-3 py-1 rounded-lg ${
+                  className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
                     page === data?.total_pages &&
                     "opacity-50 cursor-not-allowed"
                   }`}

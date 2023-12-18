@@ -6,7 +6,7 @@ const Input = ({ type, error, placeholder, customClassName, hookRef }) => {
         error
           ? "focus:ring-red-200 focus:border-red-400"
           : "focus:ring-purple-200 focus:border-purple-400"
-      }  w-full ${customClassName || ""}`}
+      } w-full ${customClassName || ""}`}
       placeholder={placeholder}
       {...hookRef}
     />

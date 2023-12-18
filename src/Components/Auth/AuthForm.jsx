@@ -24,7 +24,7 @@ const AuthForm = ({
     register,
     handleSubmit,
     watch,
-    setValue,
+
     formState: { errors },
   } = useForm();
 
@@ -101,7 +101,7 @@ const AuthForm = ({
             <Input
               type="text"
               placeholder="Enter Email"
-              error={errors?.email ? errors?.email?.message : ""}
+              error={errors?.email}
               customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400"
               hookRef={{ ...register("email", { required: true }) }}
             />
@@ -120,7 +120,7 @@ const AuthForm = ({
             <Input
               type="password"
               placeholder="Enter Password"
-              error={errors?.password ? errors?.password?.message : ""}
+              error={errors?.password}
               customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400"
               hookRef={{ ...register("password", { required: true }) }}
             />

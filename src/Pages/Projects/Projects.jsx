@@ -1,5 +1,5 @@
 const Projects = () => {
-  return <div>Projects</div>;
+  return <div className=" container text-center mt-8">Projects</div>;
 };
 
 export default Projects;

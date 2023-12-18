@@ -21,16 +21,16 @@ const Users = () => {
   // }
 
   return (
-    <div className="container mx-auto  ">
+    <div className="container mx-auto px-2 ">
       <div className="container flex justify-between mt-10 mb-6 items-center">
         <h2 className="text-2xl font-semiBold">Users</h2>
         <div className="buttons flex items-center gap-4">
-          <button className="text-gray-700 border border-gray-700 rounded-lg px-4 py-1 flex justify-center items-center gap-2">
+          <button className="text-gray-700 border border-gray-700 rounded-lg px-4 py-2 flex justify-center items-center gap-2">
             <LuUploadCloud />
             Import
           </button>
           <button
-            className="bg-[#6941C6] text-white rounded-lg px-4 py-1 flex justify-center items-center gap-2"
+            className="bg-[#6941C6] text-white rounded-lg px-4 py-2 flex justify-center items-center gap-2"
             onClick={() => {
               setShowAddUser(true);
             }}
