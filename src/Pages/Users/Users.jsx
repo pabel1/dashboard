@@ -14,18 +14,13 @@ const Users = () => {
   } = useGetAllUsersQuery({ page }, { refetchOnMountOrArgChange: true }) || {};
 
   let content = null;
-  if (!isLoading && !isSuccess && !error && users) {
-    console.log(users);
-    content = (
-      <>
-        {" "}
-        <UserTable data={users} />
-      </>
-    );
-  }
+  // if (!isLoading && !isSuccess && !error && users) {
+  //   console.log(users);
+  //   content = <> </>;
+  // }
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto  ">
       <div className="flex justify-between mt-10 mb-6 items-center">
         <h2 className="text-2xl font-semiBold">Users</h2>
         <div className="buttons flex items-center gap-4">
@@ -44,7 +39,11 @@ const Users = () => {
           <div className="flex flex-col">
             <div className="overflow-x-auto shadow-md sm:rounded-lg">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">{content}</div>
+                <div className="overflow-hidden">
+                  {users && (
+                    <UserTable data={users} page={page} setPage={setPage} />
+                  )}
+                </div>
               </div>
             </div>
           </div>

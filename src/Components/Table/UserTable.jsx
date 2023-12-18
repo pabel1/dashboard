@@ -1,16 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineArrowDown } from "react-icons/ai";
+import { IoCheckboxOutline } from "react-icons/io5";
 import { LuPen } from "react-icons/lu";
-import { TbSquareRoundedMinus } from "react-icons/tb";
+import {
+  MdCheckBoxOutlineBlank,
+  MdOutlineCheckBoxOutlineBlank,
+  MdOutlineIndeterminateCheckBox,
+} from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
 
-const UserTable = ({ data }) => {
+const UserTable = ({ data, page, setPage }) => {
+  const [show, setShow] = useState(false);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [allChecked, setAllChecked] = useState(false);
+  const [checkedUsers, setCheckedUsers] = useState([]);
   console.log(data);
+
+  const handleAllChecked = () => {
+    if (allChecked) {
+      setAllChecked(false);
+      setCheckedUsers([]);
+    } else {
+      setAllChecked(true);
+      setCheckedUsers(data?.data?.map((user) => user.id));
+    }
+  };
+  const handleCheck = (id) => {
+    if (checkedUsers.includes(id)) {
+      setCheckedUsers(checkedUsers.filter((user) => user !== id));
+
+      if (checkedUsers.length === 1) {
+        setAllChecked(false);
+      }
+    } else {
+      setCheckedUsers([...checkedUsers, id]);
+    }
+  };
   return (
-    <table className=" w-full divide-y divide-gray-200 table-fixed">
-      <thead className="bg-gray-100">
+    <table className=" w-full divide-y divide-gray-200 table-fixed ">
+      <thead className="bg-gray-100 px-4">
         <tr className="w-full">
-          <th scope="" className="py-4 pl-4   ">
-            <TbSquareRoundedMinus className=" text-2xl text-[#7F56D9] " />
+          <th scope="" className="py-4 pl-4 w-[5%]  ">
+            <div className="flex items-center">
+              <div
+                onClick={() => handleAllChecked()}
+                className=" rounded-md bg-[#F9FAFB]   flex justify-center items-center select-none"
+              >
+                {allChecked ? (
+                  <MdOutlineIndeterminateCheckBox className="text-[#7F56D9] text-2xl rounded-2xl" />
+                ) : (
+                  <MdCheckBoxOutlineBlank className="text-[#7F56D9] text-2xl rounded-2xl" />
+                )}
+              </div>
+            </div>
           </th>
           <th
             scope=""
@@ -33,21 +76,26 @@ const UserTable = ({ data }) => {
           >
             Status
           </th>
+          <th scope="" className="p-4 w-[10%]">
+            <span className=""></span>
+          </th>
         </tr>
       </thead>
-      <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700">
+      <tbody className="bg-white divide-y px-4 divide-gray-200 dark:divide-gray-700 text-left">
         {data?.data?.map((user, i) => (
           <tr key={i} className="">
-            <td className="p-4 ">
+            <td className="p-4 w-[5%]">
               <div className="flex items-center">
-                <input
-                  id="checkbox-table-1"
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="checkbox-table-1" className="">
-                  checkbox
-                </label>
+                <div
+                  onClick={() => handleCheck(user.id)}
+                  className=" rounded-md bg-[#F9FAFB]  flex justify-center items-center select-none"
+                >
+                  {checkedUsers.includes(user.id) ? (
+                    <IoCheckboxOutline className="text-[#7F56D9] text-2xl rounded-lg" />
+                  ) : (
+                    <MdOutlineCheckBoxOutlineBlank className="text-[#7F56D9] text-2xl  rounded-lg" />
+                  )}
+                </div>
               </div>
             </td>
             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap w-[35%]">
@@ -74,7 +122,7 @@ const UserTable = ({ data }) => {
               </p>
             </td>
             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap w-[15%]">
-              <span className="px-2 inline-flex text-xs leading-5 font-normal rounded-full bg-green-100 text-green-800">
+              <span className="px-3 py-1 inline-flex text-xs leading-5 font-normal rounded-full bg-green-100 text-green-800">
                 Random sticker level
               </span>
             </td>
@@ -87,8 +135,9 @@ const UserTable = ({ data }) => {
           </tr>
         ))}
       </tbody>
+
       <tfoot>
-        {/* <tr>
+        <tr>
           <td
             colSpan={5}
             className="py-4 px-4 text-sm font-medium text-gray-900 whitespace-nowrap w-[35%]"
@@ -123,8 +172,9 @@ const UserTable = ({ data }) => {
               </button>
             </div>
           </td>
-        </tr> */}
+        </tr>
       </tfoot>
+      {/* ) : null} */}
     </table>
   );
 };
