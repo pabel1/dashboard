@@ -1,21 +1,21 @@
-import { useState } from "react";
+import toast from "react-hot-toast";
+import { useDeleteUserMutation } from "../../feature/user/userApiSlice";
 
 const DeleteModal = ({ show, setShow, userId }) => {
-  //   const [deleteUser, { isLoading }] = useDeleteUserMutation();
+  const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
-  //   const handleDelete = async (id) => {
-  //     try {
-  //       const res = await deleteUser({ id });
-  //       setShow(false);
-  //       if (res === null) {
-  //         toast.success("User deleted successfully");
-  //       }
-  //     } catch (error) {
-  //       toast.error("Something went wrong");
-  //     }
-  //   };
-
-  const [isLoading] = useState(false);
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteUser({ id });
+      setShow(false);
+      console.log(res);
+      if (res === null) {
+        toast.success("User deleted successfully");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <div className={show ? "block" : "hidden"}>
@@ -62,7 +62,7 @@ const DeleteModal = ({ show, setShow, userId }) => {
                 </button>
               ) : (
                 <button
-                  //   onClick={() => handleDelete(userId)}
+                  onClick={() => handleDelete(userId)}
                   type="button"
                   className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                 >

@@ -35,7 +35,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           // do nothing
         }
       },
-      providesTags: ["user"],
+      invalidatesTags: ["user"],
     }),
     signUpUser: builder.mutation({
       query: (data) => {
@@ -70,7 +70,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           // do nothing
         }
       },
-      providesTags: ["user"],
+      invalidatesTags: ["user"],
     }),
   }),
 });

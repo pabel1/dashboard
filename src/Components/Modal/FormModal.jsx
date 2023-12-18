@@ -1,12 +1,38 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import {
+  useAddUserMutation,
+  useUpdateUserMutation,
+} from "../../feature/user/userApiSlice";
 
-const FormModal = ({ showAddUser, setShowAddUser, type }) => {
+const FormModal = ({ showAddUser, setShowAddUser, type, data }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [addUser, { isLoading: addUserIsloading }] = useAddUserMutation();
+  const [updateUser, { isLoading: updateUserIsloading }] =
+    useUpdateUserMutation();
   const closeModal = () => {
     setShowAddUser(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async (formData) => {
+    try {
+      if (type === "adduser") {
+        const res = await addUser(formData);
+        console.log(res);
+      }
+      if (type === "updateuser") {
+        const res = await updateUser(formData);
+        console.log(res, "update");
+      }
+      closeModal();
+    } catch (error) {
+      // Handle error
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -34,7 +60,7 @@ const FormModal = ({ showAddUser, setShowAddUser, type }) => {
               </div>
             </div>
             <div className="body mt-8">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-1 gap-4">
                   <div className="">
                     <label htmlFor="name">Name</label>
@@ -44,7 +70,11 @@ const FormModal = ({ showAddUser, setShowAddUser, type }) => {
                       placeholder="Enter  Name"
                       id="name"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      {...register("name", { required: true })}
                     />
+                    {errors.name && (
+                      <p className="text-red-500">Name is required</p>
+                    )}
                   </div>
                   <div className="">
                     <label htmlFor="job">Job</label>
@@ -54,7 +84,11 @@ const FormModal = ({ showAddUser, setShowAddUser, type }) => {
                       placeholder="Enter Job"
                       id="job"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      {...register("job", { required: true })}
                     />
+                    {errors.job && (
+                      <p className="text-red-500">Job is required</p>
+                    )}
                   </div>
                 </div>
                 <div className="submit flex justify-end">

@@ -20,7 +20,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (data) => {
         const { bodyData } = data;
         return {
-          url: `/api/register`,
+          url: `/api/users`,
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -28,30 +28,44 @@ export const userApiSlice = apiSlice.injectEndpoints({
           body: bodyData,
         };
       },
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          const { token, id } = result?.data || {};
 
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              access_token: token,
-            })
-          );
-          dispatch(
-            userLoggedIn({
-              access_token: token,
-              user: id,
-            })
-          );
-        } catch (error) {
-          // do nothing
-        }
+      invalidatesTags: ["user"],
+    }),
+    deleteUser: builder.mutation({
+      query: (data) => {
+        const { id } = data;
+        return {
+          url: `/api/users/${id}`,
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        };
       },
-      providesTags: ["user"],
+
+      invalidatesTags: ["user"],
+    }),
+    updateUser: builder.mutation({
+      query: (data) => {
+        const { id } = data;
+        return {
+          url: `/api/users/${id}`,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: data,
+        };
+      },
+
+      invalidatesTags: ["user"],
     }),
   }),
 });
 
-export const { useGetAllUsersQuery, useSignUpUserMutation } = userApiSlice;
+export const {
+  useGetAllUsersQuery,
+  useAddUserMutation,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+} = userApiSlice;

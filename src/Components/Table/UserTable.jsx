@@ -10,11 +10,11 @@ import {
 import { RiDeleteBinLine } from "react-icons/ri";
 import DeleteModal from "../Modal/DeleteModalToast";
 import FormModal from "../Modal/FormModal";
-
 const UserTable = ({ data, page, setPage }) => {
   const [show, setShow] = useState(false);
   const [showAddUser, setShowAddUser] = useState(false);
   const [userId, setUserId] = useState(0);
+  const [userData, setUserData] = useState();
   const [allChecked, setAllChecked] = useState(false);
   const [checkedUsers, setCheckedUsers] = useState([]);
   console.log(data);
@@ -134,12 +134,14 @@ const UserTable = ({ data, page, setPage }) => {
                     className="text-gray-600 cursor-pointer text-lg"
                     onClick={() => {
                       setShow(true);
+                      setUserId(user?.id);
                     }}
                   />
                   <LuPen
                     className="text-gray-600 cursor-pointer text-lg"
                     onClick={() => {
                       setShowAddUser(true);
+                      setUserData(user);
                     }}
                   />
                 </div>
@@ -193,8 +195,9 @@ const UserTable = ({ data, page, setPage }) => {
         setShowAddUser={setShowAddUser}
         showAddUser={showAddUser}
         type={"updateUser"}
+        data={userData}
       />
-      <DeleteModal show={show} setShow={setShow} userid={userId} />
+      <DeleteModal show={show} setShow={setShow} userId={userId} />
     </>
   );
 };
