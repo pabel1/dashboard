@@ -24,8 +24,7 @@ const UserTable = ({ data, page, setPage }) => {
       setAllChecked(false);
       setCheckedUsers([]);
     } else {
-      setAllChecked(true);
-      setCheckedUsers(data?.data?.map((user) => user.id));
+      setCheckedUsers([]);
     }
   };
   const handleCheck = (id) => {
@@ -50,7 +49,7 @@ const UserTable = ({ data, page, setPage }) => {
                   onClick={() => handleAllChecked()}
                   className=" rounded-md bg-[#F9FAFB]   flex justify-center items-center select-none"
                 >
-                  {allChecked ? (
+                  {checkedUsers.length > 0 ? (
                     <MdOutlineIndeterminateCheckBox className="text-[#7F56D9] text-2xl rounded-2xl" />
                   ) : (
                     <MdCheckBoxOutlineBlank className="text-[#7F56D9] text-2xl rounded-2xl" />

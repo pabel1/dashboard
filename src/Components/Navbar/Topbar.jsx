@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CiBellOn, CiSearch, CiSettings } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/030---Paper-Stack.png";
+import userImg from "../../assets/images/Avatar.png";
 import { navbarData } from "../data/data";
 const Topbar = () => {
   const [active, setActive] = useState("/users");
@@ -56,8 +57,8 @@ const Topbar = () => {
 
               <div className="">
                 <img
-                  className="w-7 h-7 rounded-full border-2 border-white p-[1px] cursor-pointer"
-                  src="https://flaticons.net/icon.php?slug_category=application&slug_icon=user-profile"
+                  className="w-8 h-8 rounded-full  cursor-pointer"
+                  src={userImg}
                   alt=""
                 />
                 <div
