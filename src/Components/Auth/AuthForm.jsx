@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import {
 } from "../../feature/auth/authApiSlice";
 import Button from "./Button";
 import Input from "./Input";
+import PasswordLevelChecker from "./PasswordLevelChecker";
 
 const AuthForm = ({
   title,
@@ -21,13 +23,15 @@ const AuthForm = ({
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation() || {};
   const [signUpUser] = useSignUpUserMutation() || {};
-
+  const [passwordLabel, setPasswordLabel] = useState("very weak");
   const handleForm = async (data) => {
     try {
       if (formType === "login") {
@@ -55,14 +59,26 @@ const AuthForm = ({
           toast.error(result?.error?.data?.error || "SignUp failed!");
         }
       }
-
-      // Handle successful login (you can dispatch an action if needed)
     } catch (error) {
       // Handle login error
       console.error("Login failed", error);
     }
   };
+  useEffect(() => {
+    const passwordLength = watch("password")?.length || 0;
 
+    if (passwordLength < 3) {
+      setPasswordLabel("very weak");
+    } else if (passwordLength < 5) {
+      setPasswordLabel("weak");
+    } else if (passwordLength < 6) {
+      setPasswordLabel("medium");
+    } else if (passwordLength < 8) {
+      setPasswordLabel("strong");
+    } else {
+      setPasswordLabel("very strong");
+    }
+  }, [watch("password")]);
   return (
     <div className="flex justify-center h-[100vh] items-center">
       <div className="w-[400px] border p-10 rounded-lg shadow-md">
@@ -113,6 +129,10 @@ const AuthForm = ({
               <p className="text-[10px] text-red-500 -mt-2">
                 {errors.password}
               </p>
+            )}
+            {/* password level tracking */}
+            {formType === "signup" && watch("password") && (
+              <PasswordLevelChecker passwordLabel={passwordLabel} />
             )}
           </div>
 
