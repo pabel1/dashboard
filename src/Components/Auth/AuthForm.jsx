@@ -105,7 +105,7 @@ const AuthForm = ({
               customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400"
               hookRef={{ ...register("email", { required: true }) }}
             />
-            {errors.email && (
+            {errors?.email && (
               <span className="text-red-500">This field is required</span>
             )}
           </div>
@@ -125,9 +125,9 @@ const AuthForm = ({
               hookRef={{ ...register("password", { required: true }) }}
             />
 
-            {errors.password && (
+            {errors?.password && (
               <p className="text-[10px] text-red-500 -mt-2">
-                {errors.password}
+                {errors.password.message}
               </p>
             )}
             {/* password level tracking */}
